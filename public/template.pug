@@ -1,0 +1,9 @@
+mixin pc(x) 
+    | #[+value(x/100, {"FORMAT": "0.0%"})]
+
+each story in selected.Story
+    - var splits = story.label.split("_")
+    p 
+        | The !{splits[1]} inflation of !{strip(splits[0])}
+        | was #[+pc(selected.Data[splits[0]][splits[1]][splits[2]])] in December.
+
