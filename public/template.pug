@@ -1,9 +1,25 @@
 mixin pc(x) 
     | #[+value(x/100, {"FORMAT": "0.0%"})]
 
-each story in selected.Story
+mixin make_comp(a, b)
+    - let diff = b-a
+    if (diff==0)
+        | the rate was the same
+    else
+        | !{(diff>0)?'up':'down'}
+        | from #[+pc(a)]
+
+each story, i in selected.Story
     - var splits = story.label.split("_")
+    - console.log(i, "splits", splits)
+    if (i==0)
+        h2 
+            | Prices !{(selected.Data[splits[0]][splits[1]][splits[2]]>0)?'rise':'fall'} for !{strip(splits[0])}
     p 
-        | The !{splits[1]} inflation of !{strip(splits[0])}
-        | was #[+pc(selected.Data[splits[0]][splits[1]][splits[2]])] in December.
+        | The !{words[splits[1]]["adj"]} inflation rate for !{strip(splits[0])}
+        | was #[+pc(selected.Data[splits[0]][splits[1]][splits[2]])] in December 2022,
+        | #[+make_comp(selected.Data[splits[0]][splits[1]][prev_time[splits[1]]], selected.Data[splits[0]][splits[1]][splits[2]])]
+        | !{words[splits[1]]["comp"]}. 
+        | In the !{words[splits[1]]["alt"]} to December 2022, the inflation rate for these products was 
+        | #[+pc(selected.Data[splits[0]][change_span[splits[1]]][splits[2]])].
 
