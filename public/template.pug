@@ -11,15 +11,17 @@ mixin make_comp(a, b)
 
 each story, i in selected.Story
     - var splits = story.label.split("_")
+    - var current_data = selected.Data[splits[0]][splits[1]][splits[2]]
+    - var previous_data = selected.Data[splits[0]][splits[1]][1]
     - console.log(i, "splits", splits)
     if (i==0)
         h2 
-            | Prices !{(selected.Data[splits[0]][splits[1]][splits[2]]>0)?'rise':'fall'} for !{strip(splits[0])}
+            | Prices !{(current_data>0)?'rise':'fall'} for !{strip(splits[0])}
     p 
+        - var alt_data = words[splits[1]]["alt"]
         | The !{words[splits[1]]["adj"]} inflation rate for !{strip(splits[0])}
-        | was #[+pc(selected.Data[splits[0]][splits[1]][splits[2]])] in December 2022,
-        | #[+make_comp(selected.Data[splits[0]][splits[1]][prev_time[splits[1]]], selected.Data[splits[0]][splits[1]][splits[2]])]
+        | was #[+pc(current_data)] in December 2022,
+        | #[+make_comp(previous_data, current_data)]
         | !{words[splits[1]]["comp"]}. 
-        | In the !{words[splits[1]]["alt"]} to December 2022, the inflation rate for these products was 
-        | #[+pc(selected.Data[splits[0]][change_span[splits[1]]][splits[2]])].
-
+        | In the #[+value( words[alt_data]['noun'] )] to December 2022, the inflation rate for these products was 
+        | #[+pc(selected.Data[splits[0]][alt_data][splits[2]])].

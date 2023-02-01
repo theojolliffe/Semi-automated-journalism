@@ -7,7 +7,7 @@
 
 	let divisions, template, words;
 	onMount(async () => {
-		const res = await fetch(`https://gist.githubusercontent.com/theojolliffe/25c4ba707fad4a06ee2bb822fa6a600e/raw/2f2a1870b000cd93a9932c673b148999fe294181/divisions.json`);
+		const res = await fetch(`https://gist.githubusercontent.com/theojolliffe/25c4ba707fad4a06ee2bb822fa6a600e/raw/9fa39b79fc680bf1d4bcc3494f4cf25ba2ccb56b/divisions.json`);
 		divisions = await res.json();
 		console.log("divisions", divisions)
 
@@ -33,14 +33,6 @@
 	}
 
 	// Create a look up which will allow us to index the previous time. There's probably a good way of automating finding the previous time span if you were going to be using this engine for monthly releases, in ordered to save having to update this lookup each time.
-	let prev_time = {
-		"1-month": "Dec 2021",
-		"12-month": "Nov 2022"
-	}
-	let change_span = {
-		"1-month": "12-month",
-		"12-month": "1-month"
-	}
 
 
 	function generate() {
@@ -48,9 +40,7 @@
 			language: 'en_UK',
 			selected: selected,
 			strip: strip,
-			words: words,
-			prev_time: prev_time,
-			change_span: change_span
+			words: words
 		})
 		return result
 	}
@@ -87,5 +77,4 @@
 		line-height: 2;
 		color: #323132;
 	}
-
 </style>
