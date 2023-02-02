@@ -11,9 +11,9 @@ mixin make_comp(a, b)
 
 each story, i in selected.Story
     - var splits = story.label.split("_")
+    - console.log(i, "splits", splits)
     - var current_data = selected.Data[splits[0]][splits[1]][splits[2]]
     - var previous_data = selected.Data[splits[0]][splits[1]][1]
-    - console.log(i, "splits", splits)
     if (i==0)
         h2 
             | Prices !{(current_data>0)?'rise':'fall'} for !{strip(splits[0])}
@@ -25,3 +25,4 @@ each story, i in selected.Story
         | !{words[splits[1]]["comp"]}. 
         | In the #[+value( words[alt_data]['noun'] )] to December 2022, the inflation rate for these products was 
         | #[+pc(selected.Data[splits[0]][alt_data][splits[2]])].
+    div#chartinsert
