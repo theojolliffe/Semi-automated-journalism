@@ -8,14 +8,9 @@
 	import AxisX from './AxisX.svelte';
 	import AxisY from './AxisY.svelte';
 
-    export let data_raw
-    let data = []
+    export let data;
 
-    Object.keys(data_raw).forEach((e) => {
-        data.push({myX: e, myY: data_raw[e]})
-    })
-
-    console.log("data", data )
+    $: console.log("data", data )
 
     // let data = [
     //     {
@@ -39,9 +34,10 @@
 	const xKey = 'myX';
 	const yKey = 'myY';
 
-	data.forEach(d => {
-		d[yKey] = +d[yKey];
-	});
+    data.forEach(d => {
+        d[yKey] = +d[yKey];
+    });
+
 </script>
 
 <style>

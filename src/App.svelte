@@ -11,7 +11,6 @@
 	onMount(async () => {
 		const res = await fetch(`https://gist.githubusercontent.com/theojolliffe/25c4ba707fad4a06ee2bb822fa6a600e/raw/9fa39b79fc680bf1d4bcc3494f4cf25ba2ccb56b/divisions.json`);
 		divisions = await res.json();
-		console.log("divisions", divisions)
 
 		fetch("template.pug")
         	.then((res) => res.text())
@@ -23,15 +22,12 @@
 
 	});
 	
-	let selected, story, data;
+	let selected, story, data, splits;
 	
-	$: console.log("selected", selected)
-	$: console.log("words", words)
 	$: if (selected) {
 		story = selected['Story']
+		splits = story.map((e) => e.label.split("_"))
 		data = selected['Data']
-		console.log("story", story)
-		console.log("data", data)
 	}
 	
 	function strip(string) {
@@ -50,8 +46,16 @@
 			strip: strip,
 			words: words
 		})
-		console.log(result.split(`<div id="chartinsert"></div>`))
 		return result.split(`<div id="chartinsert"></div>`)
+	}
+
+
+	function make_data(data_raw) {
+		let data_temp = []
+        Object.keys(data_raw).forEach((e) => {
+            data_temp.push({myX: e, myY: data_raw[e]})
+        })
+		return data_temp
 	}
 
 </script>
@@ -73,13 +77,12 @@
 
 	<br>
 
-	{#if selected && template && loaded && words && story}
+	{#if selected && template && loaded && words && story && splits}
 		{#each generate(selected) as chunk, i}
 			{@html chunk}
 			{#if (i<story.length)}
-				{@const splits = story[i]['label'].split("_")}
 				<div style="height: 150px; width: 50%">
-					<Line data_raw={data[splits[0]][splits[1]]}/>
+					<Line data={make_data(data[splits[i][0]][splits[i][1]])} ></Line>
 				</div>
 			{/if}
 		{/each}
