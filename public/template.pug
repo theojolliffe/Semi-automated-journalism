@@ -25,4 +25,6 @@ each story, i in selected.Story
         | !{words[splits[1]]["comp"]}. 
         | In the #[+value( words[alt_data]['noun'] )] to December 2022, the inflation rate for these products was 
         | #[+pc(selected.Data[splits[0]][alt_data][splits[2]])].
+    h4 
+        | !{words[splits[1]]["adj"]} inflation rate for !{strip(splits[0])}
     div#chartinsert
