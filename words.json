@@ -1,0 +1,14 @@
+{
+    "1-month": {
+        "adj": "monthly",
+        "noun": "month",
+        "comp": "during the same period last year",
+        "alt": "12-month"
+    },
+    "12-month": {
+        "adj": "annual",
+        "noun": "12 months",
+        "comp": "the previous month",
+        "alt": "1-month"
+    }
+}
